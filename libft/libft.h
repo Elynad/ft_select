@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 14:25:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/08/23 19:12:53 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/08/27 10:19:05 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ char				*ft_del_fb(char *str, char c);
 */
 
 void				ft_debug(char *str);
+void				ft_print_tab(char **tab, char sep);
 
 #endif

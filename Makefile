@@ -6,13 +6,16 @@
 #    By: mameyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/18 12:11:53 by mameyer           #+#    #+#              #
-#    Updated: 2017/08/25 05:35:14 by mameyer          ###   ########.fr        #
+#    Updated: 2017/08/27 19:21:01 by mameyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = ft_select
 
-SRC =	main.c
+SRC =	main.c \
+		errors.c \
+		core.c \
+		print.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -31,7 +34,7 @@ FLAGS = -Wall -g -Wextra -Werror
 all: $(NAME)
 
 $(NAME):	$(OBJ) $(LIBFT)
-			$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LIBFT)
+			$(CC) -lncurses $(FLAGS) $(OBJ) -o $(NAME) $(LIBFT)
 
 %.o :		$(SRC_PATH)/%.c
 			$(CC) -o $@ -c $< $(FLAGS)
