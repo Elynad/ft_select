@@ -7,7 +7,7 @@ TO DO LIST
 - If 'esc' is pressed, free everything and quit
 - Check window size and print list consequently
 - Print an error if the environment is empty
-
+- If the last elem of the list is deleted, free everything and quit
 
 -- BONUS --
 
