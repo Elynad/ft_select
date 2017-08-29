@@ -6,7 +6,7 @@
 #    By: mameyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/18 12:11:53 by mameyer           #+#    #+#              #
-#    Updated: 2017/08/27 19:21:01 by mameyer          ###   ########.fr        #
+#    Updated: 2017/08/28 13:16:41 by mameyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ NAME = ft_select
 SRC =	main.c \
 		errors.c \
 		core.c \
-		print.c
+		print.c \
+		parsing.c \
+		cursor.c \
+		free.c
 
 OBJ = $(SRC:.c=.o)
 

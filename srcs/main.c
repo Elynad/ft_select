@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:34:20 by mameyer           #+#    #+#             */
-/*   Updated: 2017/08/27 22:22:26 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/08/29 02:16:11 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ int		main(int argc, char **argv)
 {
 	struct termios		term;
 	struct termios		default_term;
+	t_lst				*arguments;
 	char				*term_name;
 	int					*highlight;
 
+	arguments = NULL;
 	if (argc < 2)
 		usage();
+	arguments = parsing(argv);
 	if ((term_name = getenv("TERM")) == NULL)
+	{
+		ft_putstr_fd("Error : Environment empty\n", 2);
 		exit(EXIT_FAILURE);
+	}
 	if (tgetent(NULL, term_name) == -1)
 		exit(EXIT_FAILURE);
 	if (tcgetattr(0, &term) == -1 || tcgetattr(0, &default_term) == -1)
@@ -34,7 +40,8 @@ int		main(int argc, char **argv)
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		exit(EXIT_FAILURE);
 	highlight = init_highlight_tab(argc);
-	core(argv, argc, highlight, 0);
+	arguments->cursor = 1;
+	core(arguments);
 	if (tcsetattr(0, TCSANOW, &default_term) == -1)		// SET DEFAULT TERM
 		exit(EXIT_FAILURE);
 	return (0);

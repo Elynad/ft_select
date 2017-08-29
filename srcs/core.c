@@ -6,46 +6,58 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:38:19 by mameyer           #+#    #+#             */
-/*   Updated: 2017/08/27 22:22:29 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/08/29 02:16:20 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_select.h"
 
-void		core(char **argv, int argc, int *highlight, int cursor_pos)
+void		core(t_lst *list)
 {
-	char				str[4];
-	char				*res;
+	char			str[4];
+	char			*res;
 
-	sel_print(&argv[1], cursor_pos, highlight);
+	print_list(list, '\n');
 	while (read(0, str, 3))
 	{
-		ft_putchar('\n');
 		if ((res = tgetstr("cl", NULL)) == NULL)
 			exit(EXIT_FAILURE);
 		ft_putstr_fd(res, 1);
-		if (str[0] == 127)
-			highlight[cursor_pos] = -1;
-//		ft_putstr_fd(tgoto(res2, 1, 1), 1);
-		sel_print(&argv[1], cursor_pos, highlight);
-		ft_putendl(str);
-		set_cursor_pos(str, &cursor_pos, argc);
-		if (str[0] == 32)
-		{
-			if (highlight[cursor_pos] == 1)
-				highlight[cursor_pos] = 0;
-			else
-				highlight[cursor_pos] = 1;
-		}
+		events(str, list);
+		print_list(list, '\n');
 		ft_strclr(str);
 	}
 }
 
-void		set_cursor_pos(char *str, int *cursor_pos, int argc)
+void		events(char *str, t_lst *list)
 {
 //	printf("[0] = %d | [1] = %d | [2] = %d\n", str[0], str[1], str[2]);
-	if (str[0] == 27 && str[1] == 91 && str[2] == 'A' && *cursor_pos > 0)
-		(*cursor_pos)--;
-	else if (str[0] == 27 && str[1] == 91 && str[2] == 'B' && *cursor_pos < (argc - 2))
-		(*cursor_pos)++;
+	if (str[0] == 27 && str[1] == 91 && str[2] == 'A')
+	{
+		ft_debug("UP");
+		set_cursor_prev(list);
+	}
+	else if (str[0] == 27 && str[1] == 91 && str[2] == 'B')
+	{
+		ft_debug("DOWN");
+		set_cursor_next(list);
+	}
+	else if (str[0] == 32)
+	{
+		ft_debug("SPACE");
+		set_highlight(list);
+	}
+	else if (str[0] == 127)
+	{
+		ft_debug("DEL");
+//		free(list->next);
+		list = delete_elem(list);
+		ft_debug("BACK TO EVENT, LIST->NAME VALUE");
+		ft_debug(list->name);
+	}
+	else if (str[0] == 27)
+	{
+		free_list(list);
+		exit(EXIT_SUCCESS);
+	}
 }

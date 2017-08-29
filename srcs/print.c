@@ -6,11 +6,50 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:49:49 by mameyer           #+#    #+#             */
-/*   Updated: 2017/08/27 22:15:29 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/08/28 15:31:11 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_select.h"
+
+void		print_list(t_lst *begin, char sep)
+{
+	char		*res;
+
+	if (begin->cursor == 1)
+	{
+		if ((res = tgetstr("us", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+	}
+	if (begin->highlight == 1)
+	{
+		if ((res = tgetstr("so", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+	}
+	if (begin)
+	{
+		ft_putstr(begin->name);
+		if ((res = tgetstr("ue", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+		if ((res = tgetstr("se", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+	}
+	if (begin->next)
+	{
+		if ((res = tgetstr("ue", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+		if ((res = tgetstr("se", NULL)) == NULL)
+			exit(EXIT_FAILURE);
+		ft_putstr_fd(res, 1);
+		ft_putchar(sep);
+		print_list(begin->next, sep);
+	}
+}
 
 void		sel_print(char **arguments, int cursor_pos, int *highlight)
 {
