@@ -64,4 +64,8 @@ void		signal_win(int signum)
 void		signal_int(int signum)
 {
 	(void)signum;
+	glob->control = dll_clear_list(glob->control);
+	if (tcsetattr(0, TCSANOW, &glob->default_term) == -1)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }

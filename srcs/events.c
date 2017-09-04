@@ -29,15 +29,19 @@ void		events(char *str)
 	else if (str[0] == 10)
 	{
 		print_select(glob->control);
-		glob->control = dll_clear_list(glob->control);
-		exit(EXIT_SUCCESS);
+		set_default_and_quit();
 	}
 	else if (str[0] == 27)
-	{
-		glob->control = dll_clear_list(glob->control);
-		exit(EXIT_SUCCESS);
-	}
+		set_default_and_quit();
 	ft_strclr(str);
+}
+
+void		set_default_and_quit(void)
+{
+	glob->control = dll_clear_list(glob->control);
+	if (tcsetattr(0, TCSANOW, &glob->default_term) == -1)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 /*
